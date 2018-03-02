@@ -6,9 +6,12 @@ source_end=stopper.cpp
 start_logger=start_logger
 stop_logger=stop_logger
 
+# log file directory
+dir=/cygdrive/c/Users/HP/Documents/personal_projects/my_logger/
+
 # log file names
-log_file_decorated=LOG.txt
-log_file_raw=LOG_raw.txt
+log_file_decorated=$(dir)LOG.txt
+log_file_raw=$(dir)LOG_raw.txt
 
 # definitions to pass
 definitions=\
